@@ -9,11 +9,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
 
+import ArduinoVirtualVentanas.Ventana1;
+
 public class ArduinoVirtual{
 	 static final String ID ="001";
-	 
+	 static Ventana1 ventana;
 	 
 	 public static void main(String args[]) {
+		 
+		 ventana = new Ventana1();
+		 ventana.setVisible(true);
+		 
+		
+		 
+		 
+		 
 		 Boolean Serv=true;
 		int Puerto=9001;
 		int contador =0;
@@ -26,15 +36,19 @@ public class ArduinoVirtual{
 		        	 //    System.out.println(InetAddress.getLocalHost().getp());
 		        	     System.out.println("********************************************************");
 		                 System.out.println("************  Arduino Virtual Esperando...   ***********");
+		                
 		                 System.out.println("************      ID:"+ID+"                   *************");
 		                 System.out.println("************    IP: "+InetAddress.getLocalHost().getHostAddress()+":"+Puerto+"       *************");
+		                 ventana.setTitle("IP: "+InetAddress.getLocalHost().getHostAddress()+":"+Puerto);
 		                 System.out.println("********************************************************");
 			                 
 		                 System.out.println();
+		                 ventana.lblNewLabel.setText("IP: "+InetAddress.getLocalHost().getHostAddress()+":"+Puerto);
 		                 
 		                 Socket cliente = sk.accept();
 		                 System.out.println();
 		                 System.out.println("----------------   Ingreso Cliente   -------------------");
+		                 MostrarConsola("----------------   Ingreso Cliente   -------------------");
 		                 System.out.println();
 		               Boolean exit=true;
 					do{
@@ -56,22 +70,26 @@ public class ArduinoVirtual{
 		                  if (exit){
 		                	 System.out.println("-"+contador+"- Consulta: "+datos.substring(4,6));
 		                	 salida.print(" ");
+		                	 salida.print("ID"+ID);
+		                	 MostrarConsola("ID"+ID);
 		                  switch (datos.substring(4,6)) {
-						
+		                
+		                  
 						case "r1":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r1v"+rnd.nextInt(2));
+							
 							break;
 						case "r2":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r2v"+rnd.nextInt(2));
 							break;
 						case "r3":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r3v"+rnd.nextInt(2));
 							break;
 						case "r4":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r4v"+rnd.nextInt(2));
 							break;
 						case "r5":
@@ -79,15 +97,15 @@ public class ArduinoVirtual{
 							salida.println("r5v"+rnd.nextInt(2));
 							break;
 						case "r6":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r6v"+rnd.nextInt(2));
 							break;
 						case "r7":
-							salida.print("ID"+ID);
+						//	salida.print("ID"+ID);
 							salida.println("r7v"+rnd.nextInt(2));
 							break;
 						case "r8":
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("r8v"+rnd.nextInt(2));
 							break;
 						case "te":
@@ -95,14 +113,15 @@ public class ArduinoVirtual{
 							int Tsup = 25; 
 
 							int TempFinal = (int)(Math.random()*(Tsup - Tinf) + Tinf); 
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							salida.println("tev"+String.valueOf(TempFinal)+".0");
-							
+							ventana.lblTemperatura.setText(TempFinal+" °C");
+							 MostrarConsola("tev"+String.valueOf(TempFinal)+".0");
 						break;
 						case "st":
 						  
 						   
-							salida.print("ID"+ID);
+							//salida.print("ID"+ID);
 							
 							for (int i=1;i<5;i++){
 								 String Svalor =String.valueOf(rnd.nextInt(1024));
@@ -130,5 +149,9 @@ public class ArduinoVirtual{
 		   }
 		  }
 	
-	
+	private static void MostrarConsola(String salidanueva){
+		String salidavieja;
+		//salidavieja=ventana.textAreaConsola.getText();
+		ventana.textAreaConsola.append(salidanueva+"\n");
+	}
 }
